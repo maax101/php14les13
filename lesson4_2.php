@@ -1,7 +1,8 @@
 <?php
 //http://university.netology.ru/u/belous/me/lesson13/lesson4_2.php
-$tasks = new PDO("mysql:host = http://university.netology.ru/u/belous/me/lesson13; dbname=mybase", "root", "", array(PDO::ATTR_PERSISTENT => true));
-$sql   = 'SELECT *FROM tasks';
+$tasks = new PDO("mysql:host = localhost; dbname=belous", "belous", "neto1253");
+var_dump($tasks);
+$sql   = 'SELECT *FROM belous.tasks';
 
 if (isset($_POST['save']) && !empty($_POST['description'])) {
     $insert = 'INSERT INTO `tasks` (`description`, `is_done`, `date_added`)
@@ -70,18 +71,20 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
     </tr>
 
 <?php
-foreach ($tasks->query($sql) as $row) {
-    echo
+if (!empty($tasks)) {
+    foreach ($tasks->query($sql) as $row) {
+        echo
         '<tr>
-    <td>' . $row['description'] . '</td>
-    <td>' . $row['date_added'] . '</td>
-    <td>' . $row['is_done'] . '</td>
-    <td>
-        <a href=?id=' . $row['id'] . '&action=edit>Изменить</a>
-        <a href=?id=' . $row['id'] . '&action=done>Выполнить</a>
-        <a href=?id=' . $row['id'] . '&action=delete>Удалить</a>
-    </td>
-</tr>';
+            <td>' . $row['description'] . '</td>
+            <td>' . $row['date_added'] . '</td>
+            <td>' . $row['is_done'] . '</td>
+            <td>
+                <a href=?id=' . $row['id'] . '&action=edit>Изменить</a>
+                <a href=?id=' . $row['id'] . '&action=done>Выполнить</a>
+                <a href=?id=' . $row['id'] . '&action=delete>Удалить</a>
+            </td>
+        </tr>';
+    }
 }
 ?>
 
