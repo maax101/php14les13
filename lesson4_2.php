@@ -1,7 +1,6 @@
 <?php
 //http://university.netology.ru/u/belous/me/lesson13/lesson4_2.php
 $tasks = new PDO("mysql:host = localhost; dbname=belous", "belous", "neto1253");
-var_dump($tasks);
 $sql   = 'SELECT *FROM belous.tasks';
 
 if (isset($_POST['save']) && !empty($_POST['description'])) {
