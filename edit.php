@@ -5,7 +5,7 @@ $result = $tasks->query('SELECT * FROM tasks WHERE id = '.$_GET['id'].'');
  foreach ($result->fetchAll(PDO::FETCH_ASSOC)as $value) {
  	$row = $value;
  }
-print_r($row);
+
 if (isset($_POST['save'])){
 	$description = $_POST['new_description'];
 	$update = $tasks->prepare ('UPDATE tasks SET description = :description WHERE id = :id');

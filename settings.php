@@ -2,7 +2,7 @@
 //http://university.netology.ru/u/belous/me/lesson13/lesson4_2.php
 $tasks = new PDO("mysql:host = localhost; dbname=mybase", "root", "");
 
-$sql   = 'SELECT * FROM tasks';
+$sql   = ('SELECT * FROM tasks');
 
 if (isset($_POST['save']) && !empty($_POST['description'])) {
     $insert = 'INSERT INTO `tasks` (`description`, `is_done`, `date_added`)
@@ -12,7 +12,7 @@ $insert_st = $tasks->prepare($insert);
 }
 
 if (isset($_POST['sort']) && !empty($_POST['sort_by'])) {
-    $sql .= ' ORDER BY ' . $_POST['sort_by'] . ' ';
+    $sql .= ' ORDER BY ' . $tasks->quote($_POST['sort_by'] ). ' ';
 }
 
 if (isset($_GET['action']) && $_GET['action'] == 'delete') {
@@ -24,20 +24,15 @@ $del_st = $tasks->prepare($del);
 function showData($tasks, $sql)
 {
     if (!empty($tasks)) {
-        foreach ($tasks->query($sql) as $row) {
-            echo
-            '<tr>
-                <td>' . $row['description'] . '</td>
-                <td>' . $row['date_added'] . '</td>
-                <td>' . $row['is_done'] . '</td>
-                <td>
-                    <a href=edit.php?id=' . $row['id'] . '&action=edit>Изменить</a>
-                    <a href=?id=' . $row['id'] . '&action=done>Выполнить</a>
-                    <a href=?id=' . $row['id'] . '&action=delete>Удалить</a>
-                </td>
-            </tr>';
-        }
-    }
+        return $tasks->query($sql);
+          
+    }    
 }
+if (isset($_GET['action']) && $_GET['action'] = 'done'){
+   
+    $done = $tasks->prepare ('UPDATE tasks SET is_done = 1 WHERE id = :id');
+    $done->execute([':id' => $_GET['id']]);
+    unset($_GET['action']);
+ }   
 ?>
 

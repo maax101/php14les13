@@ -1,8 +1,6 @@
 <?php
 //http://university.netology.ru/u/belous/me/lesson13/lesson4_2.php
 include 'settings.php';
-
-print_r($_POST);
 ?>
 <html>
 <title>Lesson4_2</title>
@@ -51,8 +49,26 @@ print_r($_POST);
         <th>Статус</th>
         <th></th>
     </tr>
+    <?php foreach (showData($tasks, $sql) as $row) {?>
+    <tr>
+        <td>
+            <?=$row['description']?>
+        </td>
+        <td>
+            <?=$row['date_added']?>
+        </td>
+        <td>
+            <?php if ($row['is_done'] == 0) {echo 'Не выполнено';} else {echo 'Выполнено';}?>
+        </td>
 
-<?php showData($tasks, $sql)?>
+        <td>
+            <a href=edit.php?id=<?=$row['id']?>&action=edit>Изменить</a>
+            <a href=?id=<?=$row['id']?>&action=done>Выполнить</a>
+            <a href=?id=<?=$row['id']?>&action=delete>Удалить</a>
+        </td>
+    </tr>
+ <?php }?>
+
 
 </table>
 </body>
