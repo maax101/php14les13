@@ -1,17 +1,18 @@
 <?php
 include 'settings.php';
 
-$result = $tasks->query('SELECT * FROM tasks WHERE id = '.$_GET['id'].'');
- foreach ($result->fetchAll(PDO::FETCH_ASSOC)as $value) {
- 	$row = $value;
- }
+$result = $db_con->prepare('SELECT * FROM tasks WHERE id = :id');
+$result->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
+$result->execute();
+foreach ($result->fetchAll(PDO::FETCH_ASSOC) as $value) {
+    $row = $value;
+}
 
-if (isset($_POST['save'])){
-	$description = $_POST['new_description'];
-	$update = $tasks->prepare ('UPDATE tasks SET description = :description WHERE id = :id');
-	$update->execute([':description' => $_POST['new_description'], ':id' => $_GET['id']]);
-	unset($_POST);
-	header('Location: index.php');
+if (isset($_POST['save'])) {
+    $update = $db_con->prepare('UPDATE tasks SET description = :description WHERE id = :id');
+    $update->execute([':description' => $_POST['new_description'], ':id' => $_GET['id']]);
+    unset($_POST);
+    header('Location: index.php');
 }
 ?>
 <html>

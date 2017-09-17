@@ -49,7 +49,7 @@ include 'settings.php';
         <th>Статус</th>
         <th></th>
     </tr>
-    <?php foreach (showData($tasks, $sql) as $row) {?>
+<?php foreach (showData($db_con, $sql) as $row) {?>
     <tr>
         <td>
             <?=$row['description']?>
@@ -67,9 +67,7 @@ include 'settings.php';
             <a href=?id=<?=$row['id']?>&action=delete>Удалить</a>
         </td>
     </tr>
- <?php }?>
-
-
+<?php }?>
 </table>
 </body>
 </html>
