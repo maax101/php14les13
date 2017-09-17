@@ -1,7 +1,7 @@
 <?php
 include 'settings.php';
 
-$result = $tasks->query('SELECT * FROM tasks WHERE id = '.$_GET['id'].'');
+$result = $tasks->query('SELECT * FROM tasks WHERE id = '.$_GET['id'].');
  foreach ($result->fetchAll(PDO::FETCH_ASSOC)as $value) {
  	$row = $value;
  }
